@@ -1,0 +1,129 @@
+{
+  "default-config": {
+    "type": "text",
+    "temperature": 0.6,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 1280,
+    "max_context_tokens": 16384,
+    "tags": ["fallback", "average"]
+  },
+
+  "Llama-3.2-3B-Instruct-mlx-4Bit": {
+    "type": "text",
+    "temperature": 0.5,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 1024,
+    "max_context_tokens": 16384,
+    "tags": ["llama3.2", "3b", "instruct", "bundled"]
+  },
+  "gemma-3n-E2B-it-lm-4bit": {
+    "type": "text",
+    "temperature": 0.8,
+    "top_p": 0.95,
+    "top_k": 64,
+    "max_new_tokens": 1024,
+    "max_context_tokens": 16384,
+    "tags": ["gemma-3n", "it", "bundled"]
+  },
+  "granite-4.0-h-micro-4bit": {
+    "type": "text",
+    "temperature": 0.4,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 1024,
+    "max_context_tokens": 16384,
+    "tags": ["granite", "micro", "bundled"]
+  },
+  "Qwen3-VL-4B-Instruct-MLX-4bit": {
+    "type": "vision_text",
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 2048,
+    "max_context_tokens": 16384,
+    "tags": ["qwen3", "vl", "4b", "vision", "bundled"]
+  },
+  "SmolLM3-3B-4bit": {
+    "type": "text",
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "top_k": 40,
+    "max_new_tokens": 2048,
+    "max_context_tokens": 16384,
+    "tags": ["smollm3", "3b", "bundled"]
+  },
+  "OpenELM-1_1B-Instruct-8bit": {
+    "type": "text",
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "top_k": 40,
+    "max_new_tokens": 512,
+    "max_context_tokens": 2048,
+    "tags": ["openelm", "1.1b", "fast", "bundled"]
+  },
+
+  "all-MiniLM-L6-v2-8bit": {
+    "type": "text",
+    "temperature": 0.1,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 64,
+    "max_context_tokens": 8192,
+    "tags": ["embedding", "miniLM", "user"]
+  },
+  "mlx-stable-diffusion-3.5-large-4bit-quantized": {
+    "type": "image",
+    "num_inference_steps": 30,
+    "guidance_scale": 5.5,
+    "width": 1024,
+    "height": 1024,
+    "tags": ["sd3.5", "mlx", "user"]
+  },
+  "WhiteRabbitNeo-2.5-Qwen-2.5-Coder-12.3B": {
+    "type": "text",
+    "temperature": 0.2,
+    "top_p": 0.75,
+    "top_k": 40,
+    "max_new_tokens": 1024,
+    "max_context_tokens": 16384,
+    "tags": ["coder", "qwen2.5", "12.3b", "user"]
+  },
+  "Mistral-7B-Instruct-v0.3-mlx-4bit": {
+    "type": "text",
+    "temperature": 0.6,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 1024,
+    "max_context_tokens": 16384,
+    "tags": ["mistral", "7b", "instruct", "user"]
+  },
+  "DeepSeek-R1-0528-Qwen3-8B-MLX-8bit": {
+    "type": "text",
+    "temperature": 0.5,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 1024,
+    "max_context_tokens": 16384,
+    "tags": ["deepseek-r1", "qwen3", "8b", "user"]
+  },
+  "gpt-oss-20b-MXFP4-Q8": {
+    "type": "text",
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "top_k": 64,
+    "max_new_tokens": 1024,
+    "max_context_tokens": 16384,
+    "tags": ["gpt-oss", "20b", "heavy", "user"]
+  },
+  "Qwen3-VL-4B-Instruct-MLX-8bit": {
+    "type": "vision_text",
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 2048,
+    "max_context_tokens": 16384,
+    "tags": ["qwen3", "vl", "4b", "vision", "8bit", "user"]
+  }
+}

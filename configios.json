@@ -1,0 +1,152 @@
+{
+  "platform": "iOS-iphone15pro-8gb",
+
+  "default-config": {
+    "type": "text",
+    "temperature": 0.6,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 512,
+    "max_context_tokens": 4096,
+    "tags": ["fallback", "average", "ios-default"]
+  },
+
+  "Llama-3.2-3B-Instruct-mlx-4Bit": {
+    "type": "text",
+    "temperature": 0.6,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 512,
+    "max_context_tokens": 4096,
+    "tags": ["llama3.2", "3b", "instruct", "bundled", "long-context-native-128k", "ios-ok"]
+  },
+
+  "SmolLM3-3B-4bit": {
+    "type": "text",
+    "temperature": 0.65,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 512,
+    "max_context_tokens": 4096,
+    "tags": ["smollm3", "3b", "bundled", "long-context-native-128k", "ios-ok"]
+  },
+
+  "granite-4.0-h-micro-4bit": {
+    "type": "text",
+    "temperature": 0.55,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 512,
+    "max_context_tokens": 4096,
+    "tags": ["granite", "3b", "micro", "bundled", "long-context-native-128k", "ios-ok"]
+  },
+
+  "VibeThinker-1.5B-mlx-4bit": {
+    "type": "text",
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "top_k": 40,
+    "max_new_tokens": 512,
+    "max_context_tokens": 6144,
+    "tags": ["vibethinker", "1.5b", "reasoning", "bundled-or-user", "ios-ok"]
+  },
+
+  "OpenELM-1_1B-Instruct-8bit": {
+    "type": "text",
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "top_k": 40,
+    "max_new_tokens": 384,
+    "max_context_tokens": 2048,
+    "tags": ["openelm", "1.1b", "fast", "bundled", "ios-fast"]
+  },
+
+  "Mistral-7B-Instruct-v0.3-mlx-4bit": {
+    "type": "text",
+    "temperature": 0.6,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 384,
+    "max_context_tokens": 3072,
+    "tags": ["mistral", "7b", "instruct", "user", "heavier", "ios-heavy"]
+  },
+
+  "gemma-3-4b-it-qat-4bit": {
+    "type": "vision_text",
+    "temperature": 0.6,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 512,
+    "max_context_tokens": 4096,
+    "tags": [
+      "gemma-3",
+      "4b",
+      "it",
+      "qat",
+      "vision",
+      "multimodal",
+      "long-context-128k",
+      "ios-ok"
+    ]
+  },
+
+  "gemma-3n-E4B-it-MLX-4bit": {
+    "type": "vision_text",
+    "temperature": 0.6,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 384,
+    "max_context_tokens": 3072,
+    "tags": ["gemma-3n", "e4b", "it", "multimodal", "edge-optimized", "ios-ok"]
+  },
+
+  "Qwen3-VL-4B-Instruct-MLX-4bit": {
+    "type": "vision_text",
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_new_tokens": 512,
+    "max_context_tokens": 4096,
+    "tags": ["qwen3", "vl", "4b", "vision", "bundled", "long-context-native-256k", "ios-ok"]
+  },
+
+  "Qwen3-VL-4B-Instruct-MLX-8bit": {
+    "type": "vision_text",
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "max_new_tokens": 256,
+    "max_context_tokens": 2048,
+    "tags": ["qwen3", "vl", "4b", "vision", "8bit", "user", "heavy", "ios-very-heavy"]
+  },
+
+  "bge-small-en-v1.5-bf16": {
+    "type": "text",
+    "temperature": 0.1,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 0,
+    "max_context_tokens": 512,
+    "tags": ["embedding", "bge-small", "mlx", "ios-ok"]
+  },
+
+  "bge-m3": {
+    "type": "text",
+    "temperature": 0.1,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 0,
+    "max_context_tokens": 4096,
+    "tags": ["embedding", "bge-m3", "dense+lexical", "user", "heavy-embedding", "ios-heavy"]
+  },
+
+  "all-MiniLM-L6-v2-8bit": {
+    "type": "text",
+    "temperature": 0.1,
+    "top_p": 0.9,
+    "top_k": 40,
+    "max_new_tokens": 0,
+    "max_context_tokens": 1024,
+    "tags": ["embedding", "miniLM", "bundled", "light-embedding", "ios-fast"]
+  }
+}

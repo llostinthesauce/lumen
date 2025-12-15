@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- App Sandbox: Required for App Store submission -->
+	<key>com.apple.security.app-sandbox</key>
+	<true/>
+	
+	<!-- File Access: Allow reading user-selected files (for model imports) -->
+	<key>com.apple.security.files.user-selected.read-only</key>
+	<true/>
+	
+	<!-- File Access: Allow reading/writing to app's own container -->
+	<key>com.apple.security.files.downloads.read-write</key>
+	<false/>
+	
+	<!-- Hardened Runtime: Allow unsigned executable memory (required for MLX) -->
+	<key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+	<true/>
+	
+	<!-- Hardened Runtime: Disable library validation (required for MLX frameworks) -->
+	<key>com.apple.security.cs.disable-library-validation</key>
+	<true/>
+	
+	<!-- Network: Not needed for local MLX inference, but disabled for security -->
+	<key>com.apple.security.network.client</key>
+	<false/>
+	<key>com.apple.security.network.server</key>
+	<false/>
+	
+	<!-- Keychain: Required for secure chat storage -->
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)com.conyshanks.lumenLLM.LumenComposite</string>
+	</array>
+</dict>
+</plist>
