@@ -382,11 +382,7 @@ struct ManageModelsView: View {
                 await MainActor.run {
                     state.currentModelURL = modelURL
                     state.isModelLoaded = true
-                    if let multiEngine = state.engine as? MultiEngine {
-                        state.currentEngineName = multiEngine.currentEngineName()
-                    } else {
-                        state.currentEngineName = "MLX"
-                    }
+state.currentEngineName = "MLX"
                     state.updateSelected { thread in
                         thread.modelId = selectedModel
                         thread.config = config
@@ -1034,11 +1030,7 @@ struct SettingsView: View {
                 await MainActor.run {
                     state.currentModelURL = modelURL
                     state.isModelLoaded = true
-                    if let multiEngine = state.engine as? MultiEngine {
-                        state.currentEngineName = multiEngine.currentEngineName()
-                    } else {
-                        state.currentEngineName = "MLX"
-                    }
+state.currentEngineName = "MLX"
                     state.updateSelected { thread in
                         thread.modelId = selectedModel
                         thread.config = config

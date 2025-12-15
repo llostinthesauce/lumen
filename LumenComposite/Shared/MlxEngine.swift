@@ -325,4 +325,9 @@ public final class MlxEngine: ChatEngine {
         }
     }
     #endif
+    #endif
+    
+    public func currentEngineName() -> String {
+        "MLX"
+    }
 }

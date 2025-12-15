@@ -9,7 +9,7 @@ struct LumenDesktopApp: App {
 
     init() {
         // Directory creation is now handled lazily or by user action
-        let engine = MultiEngine()
+        let engine = MlxEngine()
         let appState = AppState(engine: engine)
         _state = StateObject(wrappedValue: appState)
         _sessionController = StateObject(wrappedValue: ChatSessionController(state: appState))

@@ -168,6 +168,7 @@ Temporary Items
 
 # Local runtime data (models, chats, knowledge base, vectors)
 Models/
+!LumenComposite/Shared/Models/
 Chats/
 KnowledgeBase/
 Attachments/

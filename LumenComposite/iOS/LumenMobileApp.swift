@@ -12,7 +12,7 @@ struct LumenMobileApp: App {
         // Copy any bundled models into place if they aren't already installed
         ModelStorage.shared.installBundledModelsIfNeeded()
         
-        let engine = MultiEngine()
+        let engine = MlxEngine()
         let appState = AppState(engine: engine)
         _state = StateObject(wrappedValue: appState)
         _sessionController = StateObject(wrappedValue: ChatSessionController(state: appState))
