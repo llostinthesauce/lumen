@@ -1,9 +1,32 @@
 # Lumen
 
-> [!NOTE]
-> **Work in Progress**: This project is currently under active development. Features, APIs, and interfaces are subject to change.
+> ⚠️ **DEPRECATED**: This project's concepts have been merged into **[Cortex](https://github.com/llostinthesauce/cortex)**
+>
+> Cortex is now the unified platform for local LLM inference, RAG, and agents on Apple Silicon.
+>
+> **Use [Cortex](https://github.com/llostinthesauce/cortex) for new projects.**
 
-Lumen is a powerful, privacy-focused interface for running Large Language Models (LLMs) locally on your Mac and iOS devices. Built on Apple's **MLX** framework, Lumen leverages the full potential of Apple Silicon to deliver high-performance, low-latency AI interactions without ever sending data to the cloud.
+---
+
+## What was Lumen?
+
+Lumen was a privacy-focused SwiftUI interface for running Large Language Models locally on Mac and iOS. Built on Apple's MLX framework, it explored native GUI patterns for model management, RAG workspaces, and performance telemetry.
+
+## What moved to Cortex?
+
+| Lumen concept | Cortex implementation |
+|---------------|----------------------|
+| MLX inference | `cortex/mlxd/` — Swift daemon with OpenAI-compatible API |
+| RAG/workspaces | `cortex/cortex/rag.py` — ChromaDB + graph retrieval |
+| Model management | `cortex/mlxd/Sources/ModelStoreKit/` |
+| TUI interface | `cortex/cortex/tui.py` — Textual-based terminal UI |
+
+Cortex focuses on a CLI/TUI workflow rather than a graphical app, but inherits Lumen's local-first philosophy.
+
+---
+
+<details>
+<summary>Original README (archived)</summary>
 
 ## Features
 
@@ -39,3 +62,5 @@ Real-time insights into your system's performance:
 
 ## Development
 This is a personal project exploring the capabilities of local LLMs on Apple hardware.
+
+</details>
