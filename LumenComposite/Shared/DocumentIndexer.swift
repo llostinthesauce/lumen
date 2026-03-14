@@ -121,9 +121,10 @@ public final class DocumentIndexer {
         }
         let texts = chunks.map { $0.text }
         
-        // Process in batches to avoid overwhelming the embedding backend
-        // Batch size of 2 + sleep ensures we don't lock up the GPU/UI
-        let batchSize = 2
+        // Process in batches to avoid overwhelming the embedding backend.
+        // Larger batches reduce async overhead and total sleep time while still
+        // yielding to the system/UI between each batch.
+        let batchSize = 8
         var allEmbeddings: [[Float]] = []
         
         for i in stride(from: 0, to: texts.count, by: batchSize) {
@@ -132,7 +133,7 @@ public final class DocumentIndexer {
             let batchEmbeddings = try await embeddingBackend.embed(texts: batch)
             allEmbeddings.append(contentsOf: batchEmbeddings)
             // Yield to let the system/UI breathe
-            try await Task.sleep(nanoseconds: 20_000_000)
+            try await Task.sleep(nanoseconds: 10_000_000)
         }
         
         var entries: [VectorDocumentChunk] = []
