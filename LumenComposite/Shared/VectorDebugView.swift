@@ -5,21 +5,24 @@ struct VectorDebugView: View {
     @State private var chunks: [VectorDocumentChunk] = []
     @State private var searchText = ""
     @State private var isLoading = false
-    
-    var filteredChunks: [VectorDocumentChunk] {
+    // Cached results – recomputed only when `chunks` or `searchText` changes.
+    @State private var filteredChunks: [VectorDocumentChunk] = []
+    @State private var groupedChunks: [String: [VectorDocumentChunk]] = [:]
+
+    private func updateFilteredResults() {
+        let filtered: [VectorDocumentChunk]
         if searchText.isEmpty {
-            return chunks
+            filtered = chunks
+        } else {
+            filtered = chunks.filter { chunk in
+                chunk.sourceID.localizedCaseInsensitiveContains(searchText) ||
+                chunk.content.localizedCaseInsensitiveContains(searchText)
+            }
         }
-        return chunks.filter { chunk in
-            chunk.sourceID.localizedCaseInsensitiveContains(searchText) ||
-            chunk.content.localizedCaseInsensitiveContains(searchText)
-        }
+        filteredChunks = filtered
+        groupedChunks = Dictionary(grouping: filtered, by: { $0.sourceID })
     }
-    
-    var groupedChunks: [String: [VectorDocumentChunk]] {
-        Dictionary(grouping: filteredChunks, by: { $0.sourceID })
-    }
-    
+
     var body: some View {
         List {
             if isLoading {
@@ -40,6 +43,9 @@ struct VectorDebugView: View {
             }
         }
         .searchable(text: $searchText, prompt: "Search source or content")
+        .onChange(of: searchText) {
+            updateFilteredResults()
+        }
         .navigationTitle("Vector Database Debug")
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
@@ -53,6 +59,7 @@ struct VectorDebugView: View {
             await MainActor.run {
                 self.chunks = allChunks
                 self.isLoading = false
+                self.updateFilteredResults()
             }
         }
 
@@ -77,6 +84,7 @@ struct VectorDebugView: View {
                 state.purgeVectorDatabase()
                 // Refresh the list (it should be empty now)
                 chunks = []
+                updateFilteredResults()
             }
         } message: {
             Text("This will remove all indexed documents and embeddings. You will need to re-index your content to use RAG features.")

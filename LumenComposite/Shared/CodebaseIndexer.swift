@@ -34,10 +34,14 @@ public final class CodebaseIndexer {
         
         var filesToIndex: [URL] = []
         
+        // Compile ignore patterns once up-front so shouldIgnore performs O(1)
+        // Set lookups instead of re-processing the patterns array for every file.
+        let compiledPatterns = compileIgnorePatterns(workspace.effectiveIgnorePatterns())
+        
         // Collect files first to avoid blocking the enumerator with async work
         for case let fileURL as URL in enumerator {
             // Check for ignore patterns
-            if shouldIgnore(fileURL, root: rootURL, patterns: workspace.effectiveIgnorePatterns()) {
+            if shouldIgnore(fileURL, root: rootURL, compiledPatterns: compiledPatterns) {
                 if let isDir = try? fileURL.resourceValues(forKeys: [.isDirectoryKey]).isDirectory, isDir {
                     enumerator.skipDescendants()
                 }
@@ -146,32 +150,41 @@ public final class CodebaseIndexer {
         return approxChunks
     }
     
-    private func shouldIgnore(_ url: URL, root: URL, patterns: [String]) -> Bool {
-        let path = url.path
-        let relativePath = path.replacingOccurrences(of: root.path, with: "")
-            .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-        
+    // Compiled representation of ignore patterns for O(1) lookups.
+    private struct CompiledIgnorePatterns {
+        let exactNames: Set<String>          // e.g. ".git", "node_modules"
+        let extensionMatches: Set<String>    // e.g. "o" from "*.o"
+    }
+
+    private func compileIgnorePatterns(_ patterns: [String]) -> CompiledIgnorePatterns {
+        var exactNames: Set<String> = []
+        var extensions: Set<String> = []
         for pattern in patterns {
-            // Simple glob-like matching
-            // 1. Exact match (e.g. "node_modules")
-            if relativePath == pattern || relativePath.hasPrefix(pattern + "/") {
-                return true
-            }
-            
-            // 2. Extension match (e.g. "*.o")
             if pattern.hasPrefix("*.") {
-                let ext = String(pattern.dropFirst(2))
-                if url.pathExtension == ext {
-                    return true
-                }
-            }
-            
-            // 3. Directory match (e.g. ".git")
-            if url.lastPathComponent == pattern {
-                return true
+                extensions.insert(String(pattern.dropFirst(2)))
+            } else {
+                exactNames.insert(pattern)
             }
         }
-        
+        return CompiledIgnorePatterns(exactNames: exactNames, extensionMatches: extensions)
+    }
+
+    private func shouldIgnore(_ url: URL, root: URL, compiledPatterns: CompiledIgnorePatterns) -> Bool {
+        let relativePath = url.path.replacingOccurrences(of: root.path, with: "")
+            .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+
+        // Check every path component so patterns like "node_modules" match
+        // at any depth (e.g. "src/node_modules/foo.js").
+        let components = relativePath.split(separator: "/", omittingEmptySubsequences: true)
+        if components.contains(where: { compiledPatterns.exactNames.contains(String($0)) }) {
+            return true
+        }
+
+        // Extension match (e.g. "*.o")
+        if compiledPatterns.extensionMatches.contains(url.pathExtension) {
+            return true
+        }
+
         return false
     }
 }

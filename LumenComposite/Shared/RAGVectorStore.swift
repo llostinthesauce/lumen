@@ -383,25 +383,64 @@ public final class SQLiteVectorStore: VectorStore {
         guard !queryEmbedding.isEmpty else { return [] }
         let chunks = try fetchAllChunksLocked()
         guard !chunks.isEmpty else { return [] }
-        
-        var results: [RetrievedChunk] = []
+
+        // Build a min-heap of capacity `topK` so we only keep the best results
+        // without sorting all N chunks.  This runs in O(N log K) instead of
+        // O(N log N) – a meaningful win when the corpus is large and topK is small.
+        var heap: [RetrievedChunk] = []
+        heap.reserveCapacity(topK + 1)
+        // Track the current heap minimum explicitly to avoid repeated optional
+        // unwrapping of `heap.first` inside the hot loop.
+        var heapMin: Float = -.greatestFiniteMagnitude
+
         for chunk in chunks {
             guard chunk.embedding.count == queryEmbedding.count else { continue }
             let score = cosineSimilarity(queryEmbedding, chunk.embedding)
-            results.append(
-                RetrievedChunk(
-                    sourceID: chunk.sourceID,
-                    chunkIndex: chunk.chunkIndex,
-                    content: chunk.content,
-                    metadata: chunk.metadata,
-                    score: score
-                )
+
+            let candidate = RetrievedChunk(
+                sourceID: chunk.sourceID,
+                chunkIndex: chunk.chunkIndex,
+                content: chunk.content,
+                metadata: chunk.metadata,
+                score: score
             )
+
+            if heap.count < topK {
+                heap.append(candidate)
+                // Sift up to maintain min-heap invariant
+                var i = heap.count - 1
+                while i > 0 {
+                    let parent = (i - 1) / 2
+                    if heap[i].score < heap[parent].score {
+                        heap.swapAt(i, parent)
+                        i = parent
+                    } else {
+                        break
+                    }
+                }
+                // Once the heap reaches capacity, record its minimum (heap root).
+                if heap.count == topK {
+                    heapMin = heap[0].score
+                }
+            } else if score > heapMin {
+                // Replace the minimum element and sift down
+                heap[0] = candidate
+                var i = 0
+                while true {
+                    let left = 2 * i + 1
+                    let right = 2 * i + 2
+                    var smallest = i
+                    if left < heap.count && heap[left].score < heap[smallest].score { smallest = left }
+                    if right < heap.count && heap[right].score < heap[smallest].score { smallest = right }
+                    if smallest == i { break }
+                    heap.swapAt(i, smallest)
+                    i = smallest
+                }
+                heapMin = heap[0].score
+            }
         }
-        return results
-            .sorted(by: { $0.score > $1.score })
-            .prefix(topK)
-            .map { $0 }
+
+        return heap.sorted(by: { $0.score > $1.score })
     }
     
     private func fetchAllChunksLocked() throws -> [VectorDocumentChunk] {
