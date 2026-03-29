@@ -31,3 +31,6 @@ Chat with your own data.
 - **macOS**: 14.0 (Sonoma) or later
 - **iOS**: 17.0 or later
 - **Hardware**: Apple Silicon (M1/M2/M3/M4)
+---
+
+*Part of [@llostinthesauce](https://github.com/llostinthesauce)'s portfolio*
