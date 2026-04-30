@@ -31,7 +31,7 @@
 	<!-- Keychain: Required for secure chat storage -->
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.conyshanks.lumenLLM.LumenComposite</string>
+		<string>$(AppIdentifierPrefix)com.lumenllm.LumenComposite</string>
 	</array>
 </dict>
 </plist>

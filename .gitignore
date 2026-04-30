@@ -1,11 +1,7 @@
-# Documentation / notes
-
-
 # Legacy or local-only assets
 Scripts/
 !Scripts/build_app.sh
 Packages/
-LumenComposite/mlx swift here/
 BundledModels/
 
 # Xcode
@@ -13,7 +9,7 @@ BundledModels/
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
 ## User settings
-userdata/
+xcuserdata/
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint

@@ -23,7 +23,7 @@ final class ModelStorage {
     }
     
     /// User-configurable custom model path (stored in UserDefaults)
-    private let customModelPathKey = "com.conyshanks.lumenLLM.LumenComposite.customModelPath"
+    private let customModelPathKey = "com.lumenllm.LumenComposite.customModelPath"
     
     /// The current models directory URL (custom path if set, otherwise default)
     var modelsURL: URL {
